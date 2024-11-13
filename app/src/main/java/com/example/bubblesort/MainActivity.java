@@ -3,7 +3,6 @@ package com.example.bubblesort;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -40,23 +39,23 @@ public class MainActivity extends AppCompatActivity {
         Button startBtn = findViewById(R.id.startBtn);
         startBtn.setOnClickListener(v -> {
 
-                String value = numInput.getText().toString();
+            String value = numInput.getText().toString();
 
-                if (value.isEmpty()) {
-                    Toast.makeText(this, "Proszę wprowadzić liczbę elementów", Toast.LENGTH_SHORT).show();
-                    return;
+            if (value.isEmpty()) {
+                Toast.makeText(this, "Proszę wprowadzić liczbę elementów", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int size = Integer.parseInt(value);
+            array = generateRandomArray(size);
+            progressBar.setProgress(0);
+
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    sortArray();
                 }
-
-                int size = Integer.parseInt(value);
-                array = generateRandomArray(size);
-                progressBar.setProgress(0);
-
-                executorService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        sortArray();
-                    }
-                });
+            });
         });
     }
 
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(5);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

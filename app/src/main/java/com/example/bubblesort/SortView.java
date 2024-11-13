@@ -4,15 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import java.util.Random;
 
 public class SortView extends View {
 
@@ -40,23 +36,15 @@ public class SortView extends View {
             return;
         }
 
-        int width = getWidth();
-        int height = getHeight();
-        int space = 1;
-        int maxSpace = space * (array.length - 1);
-        int barWidth = (width - maxSpace) / array.length;
-        int remainderSpace = (width - maxSpace) % array.length;
+        float width = getWidth();
+        float height = getHeight();
+        float barWidth = (width) / array.length;
 
         for (int i = 0; i < array.length; i++) {
-            int barHeight = (int) ((array[i] / 100.0) * height);
+            float barHeight = (float) ((array[i] / 100.0) * height);
 
-            int currentBarWidth = barWidth;
-            if (i < remainderSpace) {
-                currentBarWidth += 1;
-            }
-
-            int left = i * (barWidth + space) + Math.min(i, remainderSpace);
-            int right = left + currentBarWidth;
+            float left = i * (barWidth);
+            float right = left + barWidth;
             canvas.drawRect(left, height - barHeight, right, height, paint);
         }
     }
